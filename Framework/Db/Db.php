@@ -6,6 +6,9 @@ use Framework\Config\Config;
 
 class Db
 {
+    /**
+     * @var null|\PDO
+     */
     protected static $db = null;
 
     private function __construct()

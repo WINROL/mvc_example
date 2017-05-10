@@ -69,11 +69,11 @@ class Router
         $this->controller = Config::get('defaultController');
         $this->action = Config::get('defaultAction');
 
+        $this->uri = trim(str_replace('winrol', '', $this->uri), '/');
+
         if (empty($this->uri)) {
             return false;
         }
-
-        $this->uri = str_replace('winrol/', '', $this->uri);
 
         $parts = explode('?', $this->uri);
         $parts = trim($parts[0], '/');

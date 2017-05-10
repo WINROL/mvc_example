@@ -2,11 +2,18 @@
 
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', dirname(__DIR__));
+define('LANG_DIR', ROOT . DS . 'Lang' . DS);
+define('VIEW_DIR', ROOT . DS . 'View' . DS);
 
-require_once(ROOT . DS . 'Framework' . DS . 'bootstrap.php');
+try {
+    require_once(ROOT . DS . 'Framework' . DS . 'bootstrap.php');
 
-$router = new Framework\Router\Router();
-$router->run($_SERVER['REQUEST_URI']);
-
-$db = \Framework\Db\Db::getInstance();
-
+    \Framework\Application\Application::run(
+        new Framework\Router\Router(),
+        \Framework\Db\Db::getInstance()
+    );
+} catch (\PDOException $e) {
+    echo $e->getMessage();
+} catch (\Exception $e) {
+    echo $e->getMessage();
+}
