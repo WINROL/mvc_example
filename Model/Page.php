@@ -1,13 +1,6 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: 23
- * Date: 10.05.17
- * Time: 20:55
- */
 
 namespace Model;
-
 
 use Framework\Model\Model;
 
@@ -25,5 +18,14 @@ class Page extends Model
         $result = $stmt->fetch();
 
         return !empty($result) ? $result : false;
+    }
+
+    public function getAllPages()
+    {
+        $allPages = $this->db->query(
+            "SELECT alias AS url, title FROM page;"
+        )->fetchAll();
+
+        return $allPages;
     }
 } 

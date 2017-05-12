@@ -14,3 +14,8 @@ spl_autoload_register(
 );
 
 require_once(ROOT . DS . 'Config' . DS . 'Config.php');
+
+function _e($name, $defaultValue = null)
+{
+    echo \Framework\Lang\Lang::get($name, $defaultValue);
+}

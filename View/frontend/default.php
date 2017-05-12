@@ -34,13 +34,11 @@ use \Framework\Config\Config;
     </nav>
 
     <div class="container">
-
         <div class="starter-template">
             <br>
             <br>
-            <?php echo $data['content']?>
+            <?php echo $data['content'];?>
         </div>
-
     </div>
 
 </body>

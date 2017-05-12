@@ -6,7 +6,9 @@ Config::set('siteName', 'My Test Site');
 Config::set(
     'routes',
     [
-        'backend' => 'admin'
+        'backend' => 'admin',
+        'shop' => 'shop',
+        'blog' => 'blog',
     ]
 );
 

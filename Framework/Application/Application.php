@@ -4,6 +4,7 @@ namespace Framework\Application;
 
 use Controller\Frontend\PageController;
 use Framework\Config\Config;
+use Framework\Lang\Lang;
 use Framework\Router\Router;
 use Framework\View\View;
 use Model\Page;
@@ -25,12 +26,27 @@ class Application
         self::$router = $router;
         self::$router->run($_SERVER['REQUEST_URI']);
 
-        //model
-        $model = new Page($db);
+        Lang::load(self::$router->getLanguage());
 
-        //controller
-        $controller = new PageController(self::$router, $model);
-        $controller->viewAction();
+        $controllerStr = ucfirst(self::$router->getController());
+        $controllerName = CONTROLLER_NS
+            . ucfirst(self::$router->getRoute())
+            . DS
+            . $controllerStr
+            . 'Controller'
+        ;
+        $actionName = self::$router->getAction() . 'Action';
+
+        //model
+        $modelName = MODEL_NS . $controllerStr;
+        $model = null;
+        if (class_exists($modelName)) {
+            $model = new $modelName($db);
+        }
+
+        //call controller
+        $controller = new $controllerName(self::$router, $model);
+        $controller->$actionName();
 
         //view
         $view = new View($controller->getData());
@@ -40,7 +56,6 @@ class Application
         $layoutPath = VIEW_DIR . self::$router->getRoute()
             . DS . Config::get('defaultLayout') . '.php'
         ;
-        echo $layoutPath;
 
         //$data['content'] = $content;
         $layout = new View(compact('content'), $layoutPath);

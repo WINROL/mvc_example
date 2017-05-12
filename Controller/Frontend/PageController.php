@@ -3,22 +3,19 @@
 namespace Controller\Frontend;
 
 use Framework\Controller\Controller;
+use Model\Page;
 
 class PageController extends Controller
 {
+    /**
+     * @var Page
+     */
+    protected $model = null;
+
     public function indexAction()
     {
         //call model
-        $this->data['pages'] = [
-            0 => [
-                'title' => 'About',
-                'url' => 'tets',
-            ],
-            1 => [
-                'title' => 'Test',
-                'url' => 'tets',
-            ],
-        ];
+        $this->data['pages'] = $this->model->getAllPages();
     }
 
     public function viewAction()
